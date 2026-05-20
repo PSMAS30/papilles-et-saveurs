@@ -367,28 +367,83 @@
   #merci p { font-size: 14px; color: var(--muted); line-height: 1.7; }
   #merci .gold-text { color: var(--gold); font-weight: 600; }
 
-  /* Counter banner */
-  #counter-banner {
+  /* Panneau admin secret */
+  #admin-panel {
+    display: none;
     max-width: 560px;
-    margin: 0 auto 16px;
-    background: rgba(59,26,8,0.08);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 10px 16px;
+    margin: 0 auto 20px;
+    background: var(--cream);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(59,26,8,0.15);
+  }
+  .admin-header {
+    background: var(--brown);
+    padding: 14px 20px;
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+  .admin-header h2 { font-size: 15px; color: var(--gold); font-family: 'Playfair Display', serif; margin: 0; }
+  .admin-header span { font-size: 11px; color: rgba(248,239,226,0.5); margin-left: auto; }
+  .admin-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-box {
+    background: var(--cream);
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .stat-box .stat-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gold); display: block; }
+  .stat-box .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .admin-responses { padding: 16px 20px; max-height: 340px; overflow-y: auto; }
+  .admin-responses h3 { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; }
+  .resp-card {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
     font-size: 12px;
     color: var(--brown);
+    line-height: 1.7;
   }
-  #counter-banner span { font-weight: 600; color: var(--gold); font-size: 16px; }
+  .resp-card .resp-date { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+  .resp-card strong { color: var(--brown); }
+  .admin-empty { text-align: center; padding: 20px; font-size: 13px; color: var(--muted); }
+  .admin-note { padding: 10px 20px 14px; font-size: 11px; color: var(--muted); background: rgba(201,168,76,0.08); border-top: 1px solid var(--border); }
 </style>
 </head>
 <body>
 
-<!-- Compteur de consultations (stocké localement) -->
-<div id="counter-banner">
-  👁 Personnes ayant consulté ce sondage : <span id="view-count">…</span>
+<!-- PANNEAU ADMIN SECRET (visible uniquement via ?admin=sintiche) -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <h2>🔐 Tableau de bord — Papilles et Saveurs</h2>
+    <span>Accès privé</span>
+  </div>
+  <div class="admin-stats">
+    <div class="stat-box">
+      <span class="stat-num" id="admin-views">0</span>
+      <span class="stat-label">Consultations (cet appareil)</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="admin-count">0</span>
+      <span class="stat-label">Réponses enregistrées</span>
+    </div>
+  </div>
+  <div class="admin-responses">
+    <h3>Détail des réponses</h3>
+    <div id="admin-list"></div>
+  </div>
+  <div class="admin-note">
+    💡 Les réponses complètes arrivent aussi sur votre WhatsApp. Pour le nombre total de clics sur le lien, utilisez <strong>bit.ly</strong>.
+  </div>
 </div>
 
 <div class="card">
@@ -446,33 +501,33 @@
       <div class="options-grid dates" id="dates-group">
 
         <label class="opt-item" onclick="selectRadio(this,'dates-group')">
-          <input type="radio" name="date" value="Samedi 14 juin 2026" required>
+          <input type="radio" name="date" value="Samedi 8 août 2026" required>
           <div class="opt-dot"></div>
           <div class="opt-text">
-            <span class="opt-main">Samedi 14 juin 2026</span>
+            <span class="opt-main">Samedi 8 août 2026</span>
             <span class="opt-sub">De midi à 20h · 1 Rue Maurice Ravel, 93120</span>
           </div>
-          <div class="date-badge">Juin</div>
+          <div class="date-badge">Août</div>
         </label>
 
         <label class="opt-item" onclick="selectRadio(this,'dates-group')">
-          <input type="radio" name="date" value="Samedi 21 juin 2026" required>
+          <input type="radio" name="date" value="Lundi 17 août 2026" required>
           <div class="opt-dot"></div>
           <div class="opt-text">
-            <span class="opt-main">Samedi 21 juin 2026</span>
+            <span class="opt-main">Lundi 17 août 2026</span>
             <span class="opt-sub">De midi à 20h · 1 Rue Maurice Ravel, 93120</span>
           </div>
-          <div class="date-badge">Juin</div>
+          <div class="date-badge">Août</div>
         </label>
 
         <label class="opt-item" onclick="selectRadio(this,'dates-group')">
-          <input type="radio" name="date" value="Samedi 28 juin 2026" required>
+          <input type="radio" name="date" value="Samedi 22 août 2026" required>
           <div class="opt-dot"></div>
           <div class="opt-text">
-            <span class="opt-main">Samedi 28 juin 2026</span>
+            <span class="opt-main">Samedi 22 août 2026</span>
             <span class="opt-sub">De midi à 20h · 1 Rue Maurice Ravel, 93120</span>
           </div>
-          <div class="date-badge">Juin</div>
+          <div class="date-badge">Août</div>
         </label>
 
       </div>
@@ -591,12 +646,39 @@
 </div>
 
 <script>
-// ── COMPTEUR DE VUES (localStorage) ──
+// ── COMPTEUR DE VUES (silencieux, stocké localement) ──
+var viewCount = parseInt(localStorage.getItem('ps_degustation_views') || '0', 10) + 1;
+localStorage.setItem('ps_degustation_views', viewCount);
+
+// ── MODE ADMIN SECRET ──
 (function() {
-  var key = 'ps_degustation_views';
-  var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
-  localStorage.setItem(key, count);
-  document.getElementById('view-count').textContent = count;
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('admin') !== 'sintiche') return;
+
+  var panel = document.getElementById('admin-panel');
+  panel.style.display = 'block';
+  document.getElementById('admin-views').textContent = viewCount;
+
+  var responses = JSON.parse(localStorage.getItem('ps_responses') || '[]');
+  document.getElementById('admin-count').textContent = responses.length;
+
+  var list = document.getElementById('admin-list');
+  if (responses.length === 0) {
+    list.innerHTML = '<div class="admin-empty">Aucune réponse enregistrée depuis cet appareil pour l\'instant.</div>';
+  } else {
+    responses.slice().reverse().forEach(function(r) {
+      var d = new Date(r.date);
+      var dateStr = d.toLocaleDateString('fr-FR') + ' à ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+      list.innerHTML += '<div class="resp-card">'
+        + '<div class="resp-date">' + dateStr + '</div>'
+        + '<strong>' + (r.prenom || 'Anonyme') + '</strong> · ' + r.nb + ' pers.<br>'
+        + '📅 ' + r.datePref + '<br>'
+        + '🍴 ' + (Array.isArray(r.menu) ? r.menu.join(' + ') : r.menu) + '<br>'
+        + '🥡 ' + r.emporter
+        + (r.commentaire ? '<br>💬 ' + r.commentaire : '')
+        + '</div>';
+    });
+  }
 })();
 
 // ── RADIO (sélection unique) ──
