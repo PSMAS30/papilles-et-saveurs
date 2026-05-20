@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -511,10 +512,10 @@
         </label>
 
         <label class="opt-item" onclick="selectRadio(this,'dates-group')">
-          <input type="radio" name="date" value="Lundi 17 août 2026" required>
+          <input type="radio" name="date" value="Samedi 15 août 2026" required>
           <div class="opt-dot"></div>
           <div class="opt-text">
-            <span class="opt-main">Lundi 17 août 2026</span>
+            <span class="opt-main">Samedi 15 août 2026</span>
             <span class="opt-sub">De midi à 20h · 1 Rue Maurice Ravel, 93120</span>
           </div>
           <div class="date-badge">Août</div>
@@ -646,9 +647,13 @@
 </div>
 
 <script>
-// ── COMPTEUR DE VUES (silencieux, stocké localement) ──
-var viewCount = parseInt(localStorage.getItem('ps_degustation_views') || '0', 10) + 1;
-localStorage.setItem('ps_degustation_views', viewCount);
+// ── COMPTEUR DE VUES UNIQUES (1 seule fois par appareil) ──
+var viewCount = parseInt(localStorage.getItem('ps_degustation_views') || '0', 10);
+if (!localStorage.getItem('ps_degustation_visited')) {
+  viewCount += 1;
+  localStorage.setItem('ps_degustation_views', viewCount);
+  localStorage.setItem('ps_degustation_visited', '1');
+}
 
 // ── MODE ADMIN SECRET ──
 (function() {
